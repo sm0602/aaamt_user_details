@@ -4,6 +4,12 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need location to display the address.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need location to display the address when the app is in the background.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to upload images.</string>
 	<key>CFBundleDisplayName</key>
 	<string>Aaamt User Details</string>
 	<key>CFBundleExecutable</key>

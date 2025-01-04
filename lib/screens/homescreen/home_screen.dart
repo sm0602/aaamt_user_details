@@ -1,13 +1,93 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'user_controller.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  final UserController userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.deepOrange.shade200,
+        title: Text(
+          "User Details",
+          style: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SafeArea(
-        child: SingleChildScrollView(child: Column()),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Obx(() {
+                final position = userController.currentPosition.value;
+                final address = userController.currentAddress.value;
+                return position != null
+                    ? Padding(
+                        padding: EdgeInsets.all(8.0.w),
+                        child: Text(
+                          'Location: ${position.latitude}, ${position.longitude}\nAddress: $address',
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
+                      )
+                    : Center(child: CircularProgressIndicator());
+              }),
+              Obx(() {
+                if (userController.isLoading.value) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: userController.users.length,
+                    itemBuilder: (context, index) {
+                      final user = userController.users[index];
+                      final localImagePath =
+                          userController.getLocalImagePath(user.id);
+
+                      return ListTile(
+                        leading: SizedBox(
+                          width: 50.w,
+                          height: 50.h,
+                          child: localImagePath != null
+                              ? Image.file(
+                                  File(localImagePath),
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  user.avatar,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                        title: Text(
+                          '${user.firstName} ${user.lastName}',
+                          style: TextStyle(fontSize: 16.sp),
+                        ),
+                        subtitle: Text(
+                          user.email,
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.upload,
+                            size: 20.sp,
+                          ),
+                          onPressed: () => userController.uploadImage(user.id),
+                        ),
+                      );
+                    },
+                  );
+                }
+              }),
+            ],
+          ),
+        ),
       ),
     );
   }
