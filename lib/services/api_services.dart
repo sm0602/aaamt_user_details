@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'user_model.dart';
+import '../models/user_model.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://reqres.in/api/users?page=2';

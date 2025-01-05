@@ -1,16 +1,32 @@
-# aaamt_user_details
+# Flutter App: User Details
 
-A new Flutter project.
+## Overview
+A Flutter app to display user details, current location, and allow image uploads from gallery or camera.
 
-## Getting Started
+## Features
+- **Location Display:** Latitude, longitude, and address.
+- **User List:** Fetch and display user details from an API.
+- **Image Upload:** Replace avatars with locally stored uploaded images.
+- **Responsive Design:** Optimized for all screen sizes.
 
-This project is a starting point for a Flutter application.
+## Setup
+1. **Clone Repository:**
+   ```bash
+   git clone https://github.com/sm0602/aaamt_user_details.git
+   ```
+2. **Install Dependencies:**
+   ```bash
+   flutter pub get
+   ```
+3. **Run App:**
+   ```bash
+   flutter run
+   ```
+4. **Build APK:**
+   ```bash
+   flutter build apk --release
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+## Contact
+For questions, reach out at samikshamathur06@gmail.com
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

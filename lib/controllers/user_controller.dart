@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'api_services.dart';
-import 'user_model.dart';
+import '../services/api_services.dart';
+import '../models/user_model.dart';
 
 class UserController extends GetxController {
   var users = <User>[].obs;
