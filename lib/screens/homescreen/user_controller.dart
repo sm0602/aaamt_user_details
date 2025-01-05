@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -17,15 +16,14 @@ class UserController extends GetxController {
   var currentAddress = ''.obs;
   final _userImagesBox = Hive.box('userImages');
   final _imagePicker = ImagePicker();
-  final _imagePathsMap =
-      <int, String>{}.obs; // New observable map for image paths
+  final _imagePathsMap = <int, String>{}.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchUsers();
     fetchCurrentLocation();
-    _loadSavedImages(); // Load saved images when controller initializes
+    _loadSavedImages();
   }
 
   void _loadSavedImages() {
@@ -96,12 +94,8 @@ class UserController extends GetxController {
         final permanentPath = '${appDir.path}/$fileName';
         final tempFile = File(pickedFile.path);
         final permanentFile = await tempFile.copy(permanentPath);
-
-        // Save to both Hive and the observable map
         _userImagesBox.put(userId, permanentFile.path);
         _imagePathsMap[userId] = permanentFile.path;
-
-        // Update the users list to trigger a rebuild
         users.refresh();
       } catch (e) {
         print('Error saving image: $e');

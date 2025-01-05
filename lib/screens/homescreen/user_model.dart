@@ -4,7 +4,7 @@ class User {
   final String lastName;
   final String email;
   final String avatar;
-  String? localImagePath; // Nullable field for local image path
+  String? localImagePath;
 
   User({
     required this.id,
