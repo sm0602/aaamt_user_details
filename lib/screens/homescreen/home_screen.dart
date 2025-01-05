@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'user_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -56,13 +57,19 @@ class HomeScreen extends StatelessWidget {
                           width: 50.w,
                           height: 50.h,
                           child: localImagePath != null
-                              ? Image.file(
-                                  File(localImagePath),
-                                  fit: BoxFit.cover,
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50.r),
+                                  child: Image.file(
+                                    File(localImagePath),
+                                    fit: BoxFit.cover,
+                                  ),
                                 )
-                              : Image.network(
-                                  user.avatar,
-                                  fit: BoxFit.cover,
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(50.r),
+                                  child: Image.network(
+                                    user.avatar,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                         ),
                         title: Text(
@@ -78,7 +85,8 @@ class HomeScreen extends StatelessWidget {
                             Icons.upload,
                             size: 20.sp,
                           ),
-                          onPressed: () => userController.uploadImage(user.id),
+                          onPressed: () =>
+                              _showImageSourceDialog(context, user.id),
                         ),
                       );
                     },
@@ -89,6 +97,38 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showImageSourceDialog(BuildContext context, int userId) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Upload Image'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text('Camera'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  userController.uploadImage(userId, ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Gallery'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  userController.uploadImage(userId, ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

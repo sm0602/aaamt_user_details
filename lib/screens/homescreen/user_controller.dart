@@ -84,9 +84,8 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> uploadImage(int userId) async {
-    final pickedFile =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+  Future<void> uploadImage(int userId, ImageSource source) async {
+    final pickedFile = await _imagePicker.pickImage(source: source);
     if (pickedFile != null) {
       try {
         final appDir = await getApplicationDocumentsDirectory();
